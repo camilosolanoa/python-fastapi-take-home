@@ -3,6 +3,7 @@
 ## Completed solution
 
 See [NOTES.md](NOTES.md) for decisions, exact import results, and scale trade-offs.
+See [PRESENTATION.md](PRESENTATION.md) for the demo walkthrough and interview Q&A.
 The original exercise is preserved below. The sample notes endpoint has been replaced by
 `GET /records`; `/health` remains available. No frontend or hosted service is needed.
 
