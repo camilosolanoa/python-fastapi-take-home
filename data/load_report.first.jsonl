@@ -1,0 +1,40 @@
+{"line": 107, "kind": "rejected", "reason": "sleep_hours: Input should be greater than or equal to 0"}
+{"line": 816, "kind": "rejected", "reason": "age: Input should be a valid integer, unable to parse string as an integer"}
+{"line": 1114, "kind": "rejected", "reason": "age: Input should be less than or equal to 120"}
+{"line": 1154, "kind": "rejected", "reason": "age: Input should be a valid integer, unable to parse string as an integer"}
+{"line": 1809, "kind": "rejected", "reason": "sleep_hours: Input should be a valid decimal"}
+{"line": 1918, "kind": "rejected", "reason": "age: Input should be a valid integer, unable to parse string as an integer"}
+{"line": 2128, "kind": "rejected", "reason": "age: Input should be less than or equal to 120"}
+{"line": 2659, "kind": "rejected", "reason": "Expected 16 columns, got 17"}
+{"line": 3187, "kind": "rejected", "reason": "sleep_hours: Input should be less than or equal to 24"}
+{"line": 3240, "kind": "rejected", "reason": "age: Input should be a valid integer, unable to parse string as an integer"}
+{"line": 3388, "kind": "rejected", "reason": "smoking: expected 0/1, yes/no, true/false or y/n"}
+{"line": 3517, "kind": "rejected", "reason": "gender: Input should be 'Male', 'Female' or 'Other'"}
+{"line": 3516, "kind": "conflict", "reason": "ID 3338: different values; kept stored record"}
+{"line": 4128, "kind": "rejected", "reason": "gender: Input should be 'Male', 'Female' or 'Other'"}
+{"line": 4380, "kind": "rejected", "reason": "gender: Input should be 'Male', 'Female' or 'Other'"}
+{"line": 4869, "kind": "rejected", "reason": "Expected 16 columns, got 13"}
+{"line": 4880, "kind": "rejected", "reason": "bmi: Input should be a valid decimal"}
+{"line": 5894, "kind": "rejected", "reason": "heart_rate: Input should be greater than or equal to 30"}
+{"line": 5953, "kind": "rejected", "reason": "Expected 16 columns, got 0"}
+{"line": 6606, "kind": "rejected", "reason": "age: Input should be greater than or equal to 18"}
+{"line": 6803, "kind": "rejected", "reason": "bmi: Input should be greater than or equal to 10"}
+{"line": 6988, "kind": "rejected", "reason": "heart_rate: Input should be a valid integer, unable to parse string as an integer"}
+{"line": 6309, "kind": "duplicate", "reason": "ID 5458: identical record already stored"}
+{"line": 6939, "kind": "duplicate", "reason": "ID 5989: identical record already stored"}
+{"line": 7089, "kind": "rejected", "reason": "sleep_hours: Input should be a valid decimal"}
+{"line": 7175, "kind": "rejected", "reason": "Expected 16 columns, got 13"}
+{"line": 7902, "kind": "rejected", "reason": "bmi: Input should be a valid decimal"}
+{"line": 7240, "kind": "conflict", "reason": "ID 6115: different values; kept stored record"}
+{"line": 7650, "kind": "duplicate", "reason": "ID 4729: identical record already stored"}
+{"line": 8226, "kind": "rejected", "reason": "smoking: expected 0/1, yes/no, true/false or y/n"}
+{"line": 8087, "kind": "duplicate", "reason": "ID 6049: identical record already stored"}
+{"line": 8480, "kind": "duplicate", "reason": "ID 620: identical record already stored"}
+{"line": 9872, "kind": "rejected", "reason": "heart_rate: Input should be less than or equal to 250"}
+{"line": 10015, "kind": "rejected", "reason": "Expected 16 columns, got 0"}
+{"line": 10016, "kind": "rejected", "reason": "Expected 16 columns, got 0"}
+{"line": 9278, "kind": "conflict", "reason": "ID 6748: different values; kept stored record"}
+{"line": 9362, "kind": "duplicate", "reason": "ID 555: identical record already stored"}
+{"line": 9373, "kind": "duplicate", "reason": "ID 4654: identical record already stored"}
+{"line": 9737, "kind": "conflict", "reason": "ID 7494: different values; kept stored record"}
+{"line": 9990, "kind": "duplicate", "reason": "ID 8789: identical record already stored"}

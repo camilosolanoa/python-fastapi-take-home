@@ -1,0 +1,20 @@
+name: Checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+      - run: python -m pip install uv==0.8.14
+      - run: make setup
+      - name: Validate without a database
+        run: uv run pytest tests/test_records.py
+      - run: make db-reset
+      - run: make load
+      - run: make test
+      - run: make lint

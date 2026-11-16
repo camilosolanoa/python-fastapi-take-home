@@ -1,5 +1,45 @@
 # Medallo Take Home (Python)
 
+## Completed solution
+
+See [NOTES.md](NOTES.md) for decisions, exact import results, and scale trade-offs.
+The original exercise is preserved below. The sample notes endpoint has been replaced by
+`GET /records`; `/health` remains available. No frontend or hosted service is needed.
+
+```bash
+make setup
+make db-reset
+make load
+make test
+make lint
+make dev
+```
+
+Open http://localhost:8000/docs. Example:
+`GET /records?country=Germany&min_age=30&max_age=50&limit=20`.
+For the next page, repeat the filters and pass the returned `next_after_id` as `after_id`.
+
+On Windows PowerShell, use these equivalent commands from the repository root:
+
+```powershell
+uv sync
+Copy-Item .env.example .env
+docker compose up -d --wait db
+uv run python -m scripts.load_data data/coffee_health_raw.csv
+uv run pytest
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy
+uv run fastapi dev app/main.py
+```
+
+If you previously started the original template database, recreate **this project's**
+volume with `docker compose down -v` before `docker compose up -d --wait db`.
+This deletes its existing data. Tests use disposable schemas and preserve loaded records.
+
+---
+
+
 A Python project with a [FastAPI](https://fastapi.tiangolo.com/) API and a [PostgreSQL](https://www.postgresql.org/) database running in Docker.
 
 [Español abajo](#configuración-español)
@@ -52,7 +92,7 @@ docker --version
    make dev
    ```
 
-   Open [http://localhost:8000/docs](http://localhost:8000/docs) for the interactive API docs. `GET /health` and `GET /notes` should both work.
+   Open [http://localhost:8000/docs](http://localhost:8000/docs) for the interactive API docs. `GET /health` works immediately; run `make load` before trying `GET /records`.
 
 5. Check that everything is connected:
 
@@ -70,7 +110,7 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5433/coffee
 
 The host port is **5433** so it does not conflict with a Postgres you may already have on 5432. You can connect with any client (psql, TablePlus, DBeaver, etc.) using those credentials, or run `make db-shell`.
 
-SQL files in `db/init/` run in filename order **only when the database volume is first created**. The sample `db/init/001_notes.sql` creates a `notes` table. After you add or change files there, run `make db-reset` to delete the data and apply them again. If you prefer a migration tool (Alembic, yoyo, dbmate, etc.), you may use one instead.
+SQL files in `db/init/` run in filename order **only when the database volume is first created**. `db/init/001_records.sql` creates the records table and its indexes. After you add or change files there, run `make db-reset` to delete the data and apply them again. If you prefer a migration tool (Alembic, yoyo, dbmate, etc.), you may use one instead.
 
 ### Commands
 
@@ -82,7 +122,7 @@ SQL files in `db/init/` run in filename order **only when the database volume is
 | `make db-reset` | `docker compose down -v` then `up` | Delete all data and re-run `db/init/*.sql` |
 | `make db-shell` | `docker compose exec db psql -U postgres -d coffee` | Open psql |
 | `make dev` | `uv run fastapi dev app/main.py` | Run the API with auto-reload on port 8000 |
-| `make load` | `uv run python scripts/load_data.py data/coffee_health_raw.csv` | Run the data loader |
+| `make load` | `uv run python -m scripts.load_data data/coffee_health_raw.csv` | Run the data loader |
 | `make test` | `uv run pytest` | Run tests (the database must be running) |
 | `make lint` | `ruff check`, `ruff format --check`, `mypy` | Lint, check formatting and type-check |
 
@@ -90,7 +130,7 @@ SQL files in `db/init/` run in filename order **only when the database volume is
 
 ```
 app/                 FastAPI application (main.py, db.py, config.py)
-scripts/load_data.py Data loader (you implement this)
+scripts/load_data.py Streaming data loader
 tests/               pytest tests
 db/init/             SQL run when the database is first created
 data/                The dataset
@@ -238,7 +278,7 @@ docker --version
    make dev
    ```
 
-   Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la documentación interactiva de la API. `GET /health` y `GET /notes` deberían funcionar.
+   Abre [http://localhost:8000/docs](http://localhost:8000/docs) para ver la documentación interactiva de la API. `GET /health` funciona inmediatamente; ejecuta `make load` antes de probar `GET /records`.
 
 5. Comprueba que todo está conectado:
 
@@ -256,7 +296,7 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5433/coffee
 
 El puerto del host es **5433** para no chocar con un Postgres que ya tengas en el 5432. Puedes conectarte con cualquier cliente (psql, TablePlus, DBeaver, etc.) usando esas credenciales, o ejecutar `make db-shell`.
 
-Los archivos SQL de `db/init/` se ejecutan en orden de nombre **solo cuando se crea el volumen de la base de datos por primera vez**. El ejemplo `db/init/001_notes.sql` crea una tabla `notes`. Después de agregar o cambiar archivos ahí, ejecuta `make db-reset` para borrar los datos y aplicarlos de nuevo. Si prefieres una herramienta de migraciones (Alembic, yoyo, dbmate, etc.), puedes usarla.
+Los archivos SQL de `db/init/` se ejecutan en orden de nombre **solo cuando se crea el volumen de la base de datos por primera vez**. `db/init/001_records.sql` crea la tabla de registros y sus índices. Después de agregar o cambiar archivos ahí, ejecuta `make db-reset` para borrar los datos y aplicarlos de nuevo. Si prefieres una herramienta de migraciones (Alembic, yoyo, dbmate, etc.), puedes usarla.
 
 ### Comandos
 
@@ -268,7 +308,7 @@ Los archivos SQL de `db/init/` se ejecutan en orden de nombre **solo cuando se c
 | `make db-reset` | `docker compose down -v` y luego `up` | Borrar todos los datos y volver a ejecutar `db/init/*.sql` |
 | `make db-shell` | `docker compose exec db psql -U postgres -d coffee` | Abrir psql |
 | `make dev` | `uv run fastapi dev app/main.py` | Ejecutar la API con recarga automática en el puerto 8000 |
-| `make load` | `uv run python scripts/load_data.py data/coffee_health_raw.csv` | Ejecutar el script de carga |
+| `make load` | `uv run python -m scripts.load_data data/coffee_health_raw.csv` | Ejecutar el script de carga |
 | `make test` | `uv run pytest` | Ejecutar las pruebas (la base de datos debe estar en ejecución) |
 | `make lint` | `ruff check`, `ruff format --check`, `mypy` | Lint, formato y verificación de tipos |
 
@@ -276,7 +316,7 @@ Los archivos SQL de `db/init/` se ejecutan en orden de nombre **solo cuando se c
 
 ```
 app/                 Aplicación FastAPI (main.py, db.py, config.py)
-scripts/load_data.py Script de carga (lo implementas tú)
+scripts/load_data.py Script de carga incremental
 tests/               Pruebas con pytest
 db/init/             SQL que se ejecuta al crear la base de datos
 data/                El conjunto de datos
